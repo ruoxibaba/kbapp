@@ -44,6 +44,10 @@
 <script type="text/javascript">
     apiready = function() {
       var mobileAngle;
+
+      var header = $api.byId('header');
+      适配iOS 7+，Android 4.4+状态栏
+      $api.fixStatusBar(header);
       api.removeLaunchView({
           animation: {
               type: 'fade',
@@ -52,7 +56,7 @@
       });
       var orientationSensor = api.require('orientationSensor');
         orientationSensor.startListener({ type: 1 }, function(ret, err) {
-        api.alert("可获取状态:" + ret.state + "x轴:" + ret.x + "y轴:" + ret.y + "z轴:" + ret.z)
+      header.innerHTML="可获取状态:" + ret.state + "x轴:" + ret.x + "y轴:" + ret.y + "z轴:" + ret.z;
        });
       var push = api.require('push');
         push.bind({
@@ -81,22 +85,19 @@
               alert( JSON.stringify( err) );
            }
       });
-      //var header = $api.byId('header');
-      //适配iOS 7+，Android 4.4+状态栏
-      //$api.fixStatusBar(header);
-        api.openFrame({
-            name: 'main',
-            url: 'http://1339.vkan.vip',
-            rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-                marginTop: 0, // main页面距离win顶部的高度
-                marginBottom: 0, // main页面距离win底部的高度
-                w: 'auto' // main页面的宽度 自适应屏幕宽度
-            },
-            progress:{
-              type:'page',
-              color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
-            }
-          });
+        // api.openFrame({
+        //     name: 'main',
+        //     url: 'http://1339.vkan.vip',
+        //     rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+        //         marginTop: 0, // main页面距离win顶部的高度
+        //         marginBottom: 0, // main页面距离win底部的高度
+        //         w: 'auto' // main页面的宽度 自适应屏幕宽度
+        //     },
+        //     progress:{
+        //       type:'page',
+        //       color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
+        //     }
+        //   });
     api.startSensor({
         type: 'accelerometer'
         }, function(ret, err) {
