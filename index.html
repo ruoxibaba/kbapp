@@ -66,8 +66,18 @@
             }
             //text.innerHTML="角度"+Math.round(parseInt(ret.y)/parseInt(ret.x)*100)/100+"x:"+parseInt(ret.x)+"y:"+parseInt(ret.y)+"z:"+parseInt(ret.z)+"orientation"+window.orientation;
         } else {
-
         }
+        });
+        api.addEventListener({
+            name: 'keyback'
+        }, function(ret, err) {
+            api.historyBack({
+              frameName: 'main'
+            }, function(ret, err) {
+              if (!ret.status) {
+                  api.closeWin();
+              }
+            });
         });
     };
 </script>
