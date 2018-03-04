@@ -21,25 +21,32 @@
             -webkit-box-flex: 1;
             -webkit-flex: 1;
         }
+        /*#header{
+          text-align: center; background-color: #000; color: #fff;
+          width: 50%;
+        }*/
     </style>
 </head>
 <body class="wrap">
-    <section id="flex-1">
+  <!-- <div id="header">
+  </div> -->
+  <section id="flex-1">
 
-    </section>
+  </section>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript">
     apiready = function() {
+      var mobileAngle;
       api.removeLaunchView({
           animation: {
               type: 'fade',
               duration: 500
           }
       });
-      api.setScreenOrientation({
-          orientation: 'auto'
-      });
+      //var header = $api.byId('header');
+      //适配iOS 7+，Android 4.4+状态栏
+      //$api.fixStatusBar(header);
         api.openFrame({
             name: 'main',
             url: 'http://1339.vkan.vip',
@@ -49,22 +56,25 @@
                 w: 'auto' // main页面的宽度 自适应屏幕宽度
             }
         });
-    var text=$api.byId('flex-1');
     api.startSensor({
         type: 'accelerometer'
         }, function(ret, err) {
         if (ret && ret.status) {
-            if(parseInt(ret.x)==0){
-              api.setScreenOrientation({
-                  orientation: 'auto_portrait'
-              });
+            mobileAngle=Math.abs(Math.round(Math.atan2(ret.y,ret.x)*100));
+            if(190>=mobileAngle&&mobileAngle>=170){
+              if (window.orientation==90) {
+                api.setScreenOrientation({
+                    orientation: 'auto_portrait'
+                });
+              }
+            }else if(mobileAngle>290||mobileAngle<10){
+              if (window.orientation==0) {
+                api.setScreenOrientation({
+                    orientation: 'auto_landscape'
+                });
+              }
             }
-            if(parseInt(ret.y)==0){
-              api.setScreenOrientation({
-                  orientation: 'auto_landscape'
-              });
-            }
-            //text.innerHTML="角度"+Math.round(parseInt(ret.y)/parseInt(ret.x)*100)/100+"x:"+parseInt(ret.x)+"y:"+parseInt(ret.y)+"z:"+parseInt(ret.z)+"orientation"+window.orientation;
+            //header.innerHTML="角度"+mobileAngle+"%；横竖屏:"+window.orientation;
         } else {
         }
         });
