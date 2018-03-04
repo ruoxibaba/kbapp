@@ -44,9 +44,7 @@
 <script type="text/javascript">
     apiready = function() {
       var mobileAngle;
-
       var header = $api.byId('header');
-      适配iOS 7+，Android 4.4+状态栏
       $api.fixStatusBar(header);
       api.removeLaunchView({
           animation: {
@@ -54,10 +52,10 @@
               duration: 500
           }
       });
-      var orientationSensor = api.require('orientationSensor');
-        orientationSensor.startListener({ type: 1 }, function(ret, err) {
-      header.innerHTML="可获取状态:" + ret.state + "x轴:" + ret.x + "y轴:" + ret.y + "z轴:" + ret.z;
-       });
+      // var orientationSensor = api.require('orientationSensor');
+      //   orientationSensor.startListener({ type: 1 }, function(ret, err) {
+      // header.innerHTML="可获取状态:" + ret.state + "x轴:" + ret.x + "y轴:" + ret.y + "z轴:" + ret.z;
+      //  });
       var push = api.require('push');
         push.bind({
             userName: 'testName',
@@ -98,27 +96,26 @@
         //       color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
         //     }
         //   });
-    api.startSensor({
-        type: 'accelerometer'
-        }, function(ret, err) {
-        if (ret && ret.status) {
-            mobileAngle=Math.abs(Math.round(Math.atan2(ret.y,ret.x)*100));
-            if(190>=mobileAngle&&mobileAngle>=170){
-              if (window.orientation==90) {
-                api.setScreenOrientation({
-                    orientation: 'auto_portrait'
-                });
+          api.startSensor({
+              type: 'accelerometer'
+              }, function(ret, err) {
+              if (ret && ret.status) {
+                  mobileAngle=Math.abs(Math.round(Math.atan2(ret.y,ret.x)*100));
+                  if(190>=mobileAngle&&mobileAngle>=170){
+                    if (window.orientation==90) {
+                      api.setScreenOrientation({
+                          orientation: 'auto_portrait'
+                      });
+                    }
+                  }else if(mobileAngle>290||mobileAngle<10){
+                    if (window.orientation==0) {
+                      api.setScreenOrientation({
+                          orientation: 'auto_landscape'
+                      });
+                    }
+                  }
+                  //header.innerHTML="角度"+mobileAngle+"%；横竖屏:"+window.orientation;
               }
-            }else if(mobileAngle>290||mobileAngle<10){
-              if (window.orientation==0) {
-                api.setScreenOrientation({
-                    orientation: 'auto_landscape'
-                });
-              }
-            }
-            //header.innerHTML="角度"+mobileAngle+"%；横竖屏:"+window.orientation;
-        } else {
-        }
         });
         api.addEventListener({
             name: 'keyback'
