@@ -23,15 +23,15 @@
             -webkit-flex: 1;
             text-align: center;
         }
-        #header{
+        /*#header{
           text-align: center; background-color: #000; color: #fff;
           width: 50%;
-        }
+        }*/
     </style>
 </head>
 <body class="wrap">
-  <div id="header">
-  </div>
+  <!-- <div id="header">
+  </div> -->
   <section class="flex-1">
     <span>
       <img src="./image/loading_more.gif" alt="loading..">
@@ -44,79 +44,75 @@
 <script type="text/javascript">
     apiready = function() {
       var mobileAngle;
-      var header = $api.byId('header');
-      $api.fixStatusBar(header);
+      // var header = $api.byId('header');
+      // $api.fixStatusBar(header);
       api.removeLaunchView({
           animation: {
               type: 'fade',
               duration: 500
           }
       });
-      var orientationSensor = api.require('orientationSensor');
-        orientationSensor.startListener({ type: 3 }, function(ret, err) {
-      header.innerHTML="可获取状态:" + ret.state + "x轴:" + ret.x + "y轴:" + ret.y + "z轴:" + ret.z;
-       });
-      //var push = api.require('push');
-        // push.bind({
-        //     userName: 'testName',
-        //     userId: 'testId'
-        // }, function(ret, err){
-        //     if( ret ){
-        //         alert( JSON.stringify( ret) );
-        //     }else{
-        //         alert( JSON.stringify( err) );
-        //     }
-        // });
-        // push.joinGroup({
-        //       groupName: 'vip1339'
-        //   }, function(ret, err){
-        //        if( ret ){
-        //           alert( JSON.stringify( ret) );
-        //        }else{
-        //           alert( JSON.stringify( err) );
-        //        }
-        //   });
-      // push.setListener(function( ret, err ){
-      //      if( ret ){
-      //         alert( JSON.stringify( ret) );
-      //      }else{
-      //         alert( JSON.stringify( err) );
-      //      }
-      // });
-        // api.openFrame({
-        //     name: 'main',
-        //     url: 'http://1339.vkan.vip',
-        //     rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-        //         marginTop: 0, // main页面距离win顶部的高度
-        //         marginBottom: 0, // main页面距离win底部的高度
-        //         w: 'auto' // main页面的宽度 自适应屏幕宽度
-        //     },
-        //     progress:{
-        //       type:'page',
-        //       color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
-        //     }
-        //   });
-        //   api.startSensor({
-        //       type: 'accelerometer'
-        //       }, function(ret, err) {
-        //       if (ret && ret.status) {
-        //           mobileAngle=Math.abs(Math.round(Math.atan2(ret.y,ret.x)*100));
-        //           if(190>=mobileAngle&&mobileAngle>=170){
-        //             if (window.orientation==90) {
-        //               api.setScreenOrientation({
-        //                   orientation: 'auto_portrait'
-        //               });
-        //             }
-        //           }else if(mobileAngle>290||mobileAngle<10){
-        //             if (window.orientation==0) {
-        //               api.setScreenOrientation({
-        //                   orientation: 'auto_landscape'
-        //               });
-        //             }
-        //           }
-        //           //header.innerHTML="角度"+mobileAngle+"%；横竖屏:"+window.orientation;
-        //       }
-        // });
+      var push = api.require('push');
+        push.bind({
+            userName: 'testName',
+            userId: 'testId'
+        }, function(ret, err){
+            if( ret ){
+                alert( JSON.stringify( ret) );
+            }else{
+                alert( JSON.stringify( err) );
+            }
+        });
+        push.joinGroup({
+              groupName: 'vip1339'
+          }, function(ret, err){
+               if( ret ){
+                  alert( JSON.stringify( ret) );
+               }else{
+                  alert( JSON.stringify( err) );
+               }
+          });
+      push.setListener(function( ret, err ){
+           if( ret ){
+              alert( JSON.stringify( ret) );
+           }else{
+              alert( JSON.stringify( err) );
+           }
+      });
+        api.openFrame({
+            name: 'main',
+            url: 'http://1339.vkan.vip',
+            rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+                marginTop: 0, // main页面距离win顶部的高度
+                marginBottom: 0, // main页面距离win底部的高度
+                w: 'auto' // main页面的宽度 自适应屏幕宽度
+            },
+            progress:{
+              type:'page',
+              color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
+            }
+          });
+          api.startSensor({
+              type: 'accelerometer'
+              }, function(ret, err) {
+              if (ret && ret.status) {
+                  mobileAngle=Math.abs(Math.round(Math.atan2(ret.y,ret.x)*100));
+                  if(190>=mobileAngle&&mobileAngle>=170){
+                    if (window.orientation==90) {
+                      api.setScreenOrientation({
+                          orientation: 'auto_portrait'
+                      });
+                    }
+                  }else if(mobileAngle>290||mobileAngle<10){
+                    if (window.orientation==0) {
+                      api.setScreenOrientation({
+                          orientation: 'auto_landscape'
+                      });
+                    }
+                  }
+                  //header.innerHTML="角度"+mobileAngle+"%；横竖屏:"+window.orientation;
+              }
+        });
         api.addEventListener({
             name: 'keyback'
         }, function(ret, err) {
