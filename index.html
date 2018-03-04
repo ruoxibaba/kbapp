@@ -52,37 +52,37 @@
               duration: 500
           }
       });
-      // var orientationSensor = api.require('orientationSensor');
-      //   orientationSensor.startListener({ type: 1 }, function(ret, err) {
-      // header.innerHTML="可获取状态:" + ret.state + "x轴:" + ret.x + "y轴:" + ret.y + "z轴:" + ret.z;
-      //  });
+      var orientationSensor = api.require('orientationSensor');
+        orientationSensor.startListener({ type: 1 }, function(ret, err) {
+      header.innerHTML="可获取状态:" + ret.state + "x轴:" + ret.x + "y轴:" + ret.y + "z轴:" + ret.z;
+       });
       var push = api.require('push');
-        push.bind({
-            userName: 'testName',
-            userId: 'testId'
-        }, function(ret, err){
-            if( ret ){
-                alert( JSON.stringify( ret) );
-            }else{
-                alert( JSON.stringify( err) );
-            }
-        });
-        push.joinGroup({
-              groupName: 'vip1339'
-          }, function(ret, err){
-               if( ret ){
-                  alert( JSON.stringify( ret) );
-               }else{
-                  alert( JSON.stringify( err) );
-               }
-          });
-      push.setListener(function( ret, err ){
-           if( ret ){
-              alert( JSON.stringify( ret) );
-           }else{
-              alert( JSON.stringify( err) );
-           }
-      });
+        // push.bind({
+        //     userName: 'testName',
+        //     userId: 'testId'
+        // }, function(ret, err){
+        //     if( ret ){
+        //         alert( JSON.stringify( ret) );
+        //     }else{
+        //         alert( JSON.stringify( err) );
+        //     }
+        // });
+        // push.joinGroup({
+        //       groupName: 'vip1339'
+        //   }, function(ret, err){
+        //        if( ret ){
+        //           alert( JSON.stringify( ret) );
+        //        }else{
+        //           alert( JSON.stringify( err) );
+        //        }
+        //   });
+      // push.setListener(function( ret, err ){
+      //      if( ret ){
+      //         alert( JSON.stringify( ret) );
+      //      }else{
+      //         alert( JSON.stringify( err) );
+      //      }
+      // });
         // api.openFrame({
         //     name: 'main',
         //     url: 'http://1339.vkan.vip',
