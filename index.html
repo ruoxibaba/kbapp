@@ -50,6 +50,10 @@
               duration: 500
           }
       });
+      var orientationSensor = api.require('orientationSensor');
+        orientationSensor.startListener({ type: 1 }, function(ret, err) {
+        api.alert("可获取状态:" + ret.state + "x轴:" + ret.x + "y轴:" + ret.y + "z轴:" + ret.z)
+       });
       var push = api.require('push');
         push.bind({
             userName: 'testName',
@@ -61,6 +65,15 @@
                 alert( JSON.stringify( err) );
             }
         });
+        push.joinGroup({
+              groupName: 'vip1339'
+          }, function(ret, err){
+               if( ret ){
+                  alert( JSON.stringify( ret) );
+               }else{
+                  alert( JSON.stringify( err) );
+               }
+          });
       push.setListener(function( ret, err ){
            if( ret ){
               alert( JSON.stringify( ret) );
@@ -68,15 +81,6 @@
               alert( JSON.stringify( err) );
            }
       });
-      push.joinGroup({
-            groupName: 'vip1339'
-        }, function(ret, err){
-             if( ret ){
-                alert( JSON.stringify( ret) );
-             }else{
-                alert( JSON.stringify( err) );
-             }
-        });
       //var header = $api.byId('header');
       //适配iOS 7+，Android 4.4+状态栏
       //$api.fixStatusBar(header);
