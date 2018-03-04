@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
@@ -24,17 +23,17 @@
         }
     </style>
 </head>
-
 <body class="wrap">
-    <section class="flex-1">
+    <section id="flex-1">
 
     </section>
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript">
     apiready = function() {
-        //输出Log，Log将显示在APICloud Studio控制台
-        console.log("Hello World! Hello APICloud!");
+      api.setScreenOrientation({
+          orientation: 'auto'
+      });
         api.openFrame({
             name: 'main',
             url: 'http://1339.vkan.vip',
@@ -44,11 +43,27 @@
                 w: 'auto' // main页面的宽度 自适应屏幕宽度
             }
         });
-        api.setScreenOrientation({
-    orientation: 'landscape_left'
-});
-    };
+    var text=$api.byId('flex-1');
+    api.startSensor({
+        type: 'accelerometer'
+        }, function(ret, err) {
+        if (ret && ret.status) {
+            if(parseInt(ret.x)==0){
+              api.setScreenOrientation({
+                  orientation: 'auto_portrait'
+              });
+            }
+            if(parseInt(ret.y)==0){
+              api.setScreenOrientation({
+                  orientation: 'auto_landscape'
+              });
+            }
+            //text.innerHTML="角度"+Math.round(parseInt(ret.y)/parseInt(ret.x)*100)/100+"x:"+parseInt(ret.x)+"y:"+parseInt(ret.y)+"z:"+parseInt(ret.z)+"orientation"+window.orientation;
+        } else {
 
+        }
+        });
+    };
 </script>
 
 </html>
