@@ -50,6 +50,24 @@
               duration: 500
           }
       });
+      var push = api.require('push');
+        push.bind({
+            userName: 'testName',
+            userId: 'testId'
+        }, function(ret, err){
+            if( ret ){
+                alert( JSON.stringify( ret) );
+            }else{
+                alert( JSON.stringify( err) );
+            }
+        });
+      push.setListener(function( ret, err ){
+           if( ret ){
+              alert( JSON.stringify( ret) );
+           }else{
+              alert( JSON.stringify( err) );
+           }
+      });
       //var header = $api.byId('header');
       //适配iOS 7+，Android 4.4+状态栏
       //$api.fixStatusBar(header);
