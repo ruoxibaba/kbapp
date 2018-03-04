@@ -53,23 +53,23 @@
           }
       });
       var push = api.require('push');
-        push.bind({
-            userName: 'testName',
-            userId: 'testId'
-        }, function(ret, err){
-            if( ret ){
-                //alert( JSON.stringify( ret) );
-            }else{
-              //  alert( JSON.stringify( err) );
-            }
-        });
+        // push.bind({
+        //     userName: 'testName',
+        //     userId: 'testId'
+        // }, function(ret, err){
+        //     if( ret ){
+        //         alert( 'vip1339---'+JSON.stringify( ret) );
+        //     }else{
+        //       alert( JSON.stringify( err) );
+        //     }
+        // });
         push.joinGroup({
               groupName: 'vip1339'
           }, function(ret, err){
                if( ret ){
-                //  alert( JSON.stringify( ret) );
+                alert(JSON.stringify( ret) );
                }else{
-                  //alert( JSON.stringify( err) );
+                alert( JSON.stringify( err) );
                }
           });
       push.setListener(function( ret, err ){
