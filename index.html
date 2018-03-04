@@ -31,6 +31,12 @@
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript">
     apiready = function() {
+      api.removeLaunchView({
+          animation: {
+              type: 'fade',
+              duration: 500
+          }
+      });
       api.setScreenOrientation({
           orientation: 'auto'
       });
