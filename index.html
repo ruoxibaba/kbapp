@@ -44,34 +44,34 @@
 <script type="text/javascript">
     apiready = function() {
       var mobileAngle;
-      var obj = api.require('UIWebBrowser');
-      obj.openView({
-			url: 'http://1339.vkan.vip',
-			rect:{
-				marginTop:45,
-				marginBottom:50
-			},
-			progress:{
-				color:'#F0F'
-			}
-		}, function(ret) {
-          api.alert({
-              msg: JSON.stringify(ret)
-          });
-      });
-      // api.openFrame({
-      //     name: 'main',
-      //     url: './html/main.html',
-      //     rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-      //         marginTop: 0, // main页面距离win顶部的高度
-      //         marginBottom: 0, // main页面距离win底部的高度
-      //         w: 'auto' // main页面的宽度 自适应屏幕宽度
-      //     },
-      //     progress:{
-      //       type:'page',
-      //       color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
-      //     }
-      //   });
+      // var obj = api.require('UIWebBrowser');
+      // obj.openView({
+      // 			url: 'http://1339.vkan.vip',
+      // 			rect:{
+      // 				marginTop:45,
+      // 				marginBottom:50
+      // 			},
+      // 			progress:{
+      // 				color:'#F0F'
+      // 			}
+      // 		}, function(ret) {
+      //     api.alert({
+      //         msg: JSON.stringify(ret)
+      //     });
+      // });
+      api.openFrame({
+          name: 'main',
+          url: 'http://1339.vkan.vip',
+          rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+              marginTop: 0, // main页面距离win顶部的高度
+              marginBottom: 0, // main页面距离win底部的高度
+              w: 'auto' // main页面的宽度 自适应屏幕宽度
+          },
+          progress:{
+            type:'page',
+            color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
+          }
+        });
       // var header = $api.byId('header');
       // $api.fixStatusBar(header);
       var push = api.require('push');
