@@ -45,15 +45,16 @@
     apiready = function() {
       var mobileAngle;
       var obj = api.require('UIWebBrowser');
-      obj.open({
-          rect: {
-            w:api.winWidth , // main页面的宽度 自适应屏幕宽度
-            h:api.winHeight
-          },
-          path: 'http://1339.vkan.vip',
-          fixedOn: api.frameName,
-          fixed: true
-      }, function(ret) {
+      obj.openView({
+			url: 'http://1339.vkan.vip',
+			rect:{
+				marginTop:45,
+				marginBottom:50
+			},
+			progress:{
+				color:'#F0F'
+			}
+		}, function(ret) {
           api.alert({
               msg: JSON.stringify(ret)
           });
