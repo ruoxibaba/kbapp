@@ -47,30 +47,8 @@
       // var header = $api.byId('header');
       // $api.fixStatusBar(header);
       var browser = api.require('webBrowser');
-      browser.openView({
+      browser.open({
           url: 'http://1339.vkan.vip',
-          rect: {
-              x: 0,
-              y: 0,
-              marginTop: 0, // main页面距离win顶部的高度
-              marginBottom: 0, // main页面距离win底部的高度
-              w: 'auto' // main页面的宽度 自适应屏幕宽度
-          }
-      }, function(ret, err) {
-          switch (ret.state) {
-              case 0:
-                  break;
-              case 1:
-                  break;
-              case 2:
-                  break;
-              case 3:
-                  break;
-              case 4:
-                  break;
-              default:
-                  break;
-          }
       });
       var push = api.require('push');
         // push.bind({
