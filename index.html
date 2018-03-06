@@ -46,10 +46,30 @@
       var mobileAngle;
       // var header = $api.byId('header');
       // $api.fixStatusBar(header);
-      api.removeLaunchView({
-          animation: {
-              type: 'fade',
-              duration: 500
+      var browser = api.require('webBrowser');
+      browser.openView({
+          url: 'http://1339.vkan.vip',
+          rect: {
+              x: 0,
+              y: 0,
+              marginTop: 0, // main页面距离win顶部的高度
+              marginBottom: 0, // main页面距离win底部的高度
+              w: 'auto' // main页面的宽度 自适应屏幕宽度
+          }
+      }, function(ret, err) {
+          switch (ret.state) {
+              case 0:
+                  break;
+              case 1:
+                  break;
+              case 2:
+                  break;
+              case 3:
+                  break;
+              case 4:
+                  break;
+              default:
+                  break;
           }
       });
       var push = api.require('push');
@@ -72,26 +92,26 @@
                 alert( JSON.stringify( err) );
                }
           });
-      push.setListener(function( ret, err ){
-           if( ret ){
-              alert( JSON.stringify( ret) );
-           }else{
-              alert( JSON.stringify( err) );
-           }
-      });
-        api.openFrame({
-            name: 'main',
-            url: 'http://1339.vkan.vip',
-            rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-                marginTop: 0, // main页面距离win顶部的高度
-                marginBottom: 0, // main页面距离win底部的高度
-                w: 'auto' // main页面的宽度 自适应屏幕宽度
-            },
-            progress:{
-              type:'page',
-              color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
-            }
-          });
+        push.setListener(function( ret, err ){
+             if( ret ){
+                alert( JSON.stringify( ret) );
+             }else{
+                alert( JSON.stringify( err) );
+             }
+        });
+        // api.openFrame({
+        //     name: 'main',
+        //     url: 'http://1339.vkan.vip',
+        //     rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+        //         marginTop: 0, // main页面距离win顶部的高度
+        //         marginBottom: 0, // main页面距离win底部的高度
+        //         w: 'auto' // main页面的宽度 自适应屏幕宽度
+        //     },
+        //     progress:{
+        //       type:'page',
+        //       color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
+        //     }
+        //   });
           api.startSensor({
               type: 'accelerometer'
               }, function(ret, err) {
@@ -115,14 +135,14 @@
         });
         api.addEventListener({
             name: 'keyback'
-        }, function(ret, err) {
-            api.historyBack({
-              frameName: 'main'
-            }, function(ret, err) {
-              if (!ret.status) {
-                  api.closeWin();
-              }
-            });
+          }, function(ret, err) {
+              api.historyBack({
+                frameName: 'main'
+              }, function(ret, err) {
+                if (!ret.status) {
+                    api.closeWin();
+                }
+              });
         });
     };
 </script>
