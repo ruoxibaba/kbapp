@@ -23,15 +23,9 @@
             -webkit-flex: 1;
             text-align: center;
         }
-        /*#header{
-          text-align: center; background-color: #000; color: #fff;
-          width: 50%;
-        }*/
     </style>
 </head>
 <body class="wrap">
-  <!-- <div id="header">
-  </div> -->
   <section class="flex-1">
     <span>
       <img src="./image/loading_more.gif" alt="loading..">
@@ -44,21 +38,6 @@
 <script type="text/javascript">
     apiready = function() {
       var mobileAngle;
-      // var obj = api.require('UIWebBrowser');
-      // obj.openView({
-      // 			url: 'http://1339.vkan.vip',
-      // 			rect:{
-      // 				marginTop:45,
-      // 				marginBottom:50
-      // 			},
-      // 			progress:{
-      // 				color:'#F0F'
-      // 			}
-      // 		}, function(ret) {
-      //     api.alert({
-      //         msg: JSON.stringify(ret)
-      //     });
-      // });
       api.openFrame({
           name: 'main',
           url: 'http://1339.vkan.vip',
@@ -72,19 +51,26 @@
             color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
           }
         });
-      // var header = $api.byId('header');
-      // $api.fixStatusBar(header);
+        api.setKeepScreenOn({
+            keepOn: true
+        });
       var push = api.require('push');
-        // push.bind({
-        //     userName: 'testName',
-        //     userId: 'testId'
-        // }, function(ret, err){
-        //     if( ret ){
-        //         alert( 'vip1339---'+JSON.stringify( ret) );
-        //     }else{
-        //       alert( JSON.stringify( err) );
-        //     }
-        // });
+      var phoneNumber = api.getPhoneNumber({
+            sync: true
+        });
+        alert(phoneNumber);
+        if(typeof(phoneNumber)==number){
+            push.bind({
+                userName: phoneNumber,
+                userId: phoneNumber
+            }, function(ret, err){
+                if( ret ){
+                    alert(JSON.stringify( ret) );
+                }else{
+                  alert( JSON.stringify( err) );
+                }
+            });
+        }
         push.joinGroup({
               groupName: 'vip1339'
           }, function(ret, err){
@@ -102,19 +88,6 @@
                 alert( JSON.stringify( err) );
              }
         });
-        // api.openFrame({
-        //     name: 'main',
-        //     url: './html/main.html',
-        //     rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-        //         marginTop: 0, // main页面距离win顶部的高度
-        //         marginBottom: 0, // main页面距离win底部的高度
-        //         w: 'auto' // main页面的宽度 自适应屏幕宽度
-        //     },
-        //     progress:{
-        //       type:'page',
-        //       color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
-        //     }
-        //   });
           api.startSensor({
               type: 'accelerometer'
               }, function(ret, err) {
@@ -133,7 +106,6 @@
                       });
                     }
                   }
-                  //header.innerHTML="角度"+mobileAngle+"%；横竖屏:"+window.orientation;
               }
         });
         api.addEventListener({
