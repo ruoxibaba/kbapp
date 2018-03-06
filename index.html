@@ -46,10 +46,6 @@
       var mobileAngle;
       // var header = $api.byId('header');
       // $api.fixStatusBar(header);
-      var browser = api.require('webBrowser');
-      browser.open({
-          url: 'http://1339.vkan.vip',
-      });
       var push = api.require('push');
         // push.bind({
         //     userName: 'testName',
@@ -121,6 +117,10 @@
                     api.closeWin();
                 }
               });
+        });
+        var browser = api.require('webBrowser');
+        browser.open({
+            url: 'http://1339.vkan.vip',
         });
     };
 </script>
