@@ -47,7 +47,7 @@
       var obj = api.require('UIWebBrowser');
       obj.open({
           rect: {
-            w: 'auto', // main页面的宽度 自适应屏幕宽度
+            w:api.winWidth , // main页面的宽度 自适应屏幕宽度
             h:api.winHeight
           },
           path: 'http://1339.vkan.vip',
