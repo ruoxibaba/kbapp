@@ -29,14 +29,14 @@
 <script type="text/javascript" src="../script/api.js"></script>
 <script type="text/javascript">
     apiready = function(){
-    var appDevice=new Array();
-    appDevice['phone'] = api.getPhoneNumber({ sync: true });
-    appDevice['deviceId']=api.deviceId;
-    appDevice['userId'] = appDevice['phone']!=""?appDevice['phone']:appDevice['deviceId'];
-    console.log(appDevice['userId']);
-    if($api.getStorage('userId')!=appDevice['userId']){
-        $api.setStorage('userId',appDevice['userId']);
-    }
+    // var appDevice=new Array();
+    // appDevice['phone'] = api.getPhoneNumber({ sync: true });
+    // appDevice['deviceId']=api.deviceId;
+    // appDevice['userId'] = appDevice['phone']!=""?appDevice['phone']:appDevice['deviceId'];
+    // console.log(appDevice['userId']);
+    // if($api.getStorage('userId')!=appDevice['userId']){
+    //     $api.setStorage('userId',appDevice['userId']);
+    // }
 		var ver = api.version;
 		var sType = api.systemType;
 		var sVer = api.systemVersion;
@@ -67,9 +67,7 @@
 		str += '<li>子窗口宽度: ' + frameWidth + '</li>';
 		str += '<li>子窗口高度: ' + frameHeight + '</li>';
 		str += '</ul>';
-
 		$api.byId('sys-info').innerHTML = str;
-
     };
 </script>
 </html>
