@@ -45,76 +45,47 @@ var home='http://1339.vkan.vip/';
       appDevice['userId'] = appDevice['phone']!=""?appDevice['phone']:appDevice['deviceId'];
       openWinBack();
       updateInfor();
-      createMember(appDevice['userId'],123456);
-      // api.openFrame({
-      //     name: 'main',
-      //     url: 'http://1339.vkan.vip',
-      //     rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-      //         marginTop: 0, // main页面距离win顶部的高度
-      //         marginBottom: 0, // main页面距离win底部的高度
-      //         w: 'auto' // main页面的宽度 自适应屏幕宽度
-      //     },
-      //     progress:{
-      //       type:'page',
-      //       color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
-      //     }
-      //   });
+      //createMember(appDevice['userId'],123456);
+      api.openFrame({
+          name: 'main',
+          url: 'http://1339.vkan.vip',
+          rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+              marginTop: 0, // main页面距离win顶部的高度
+              marginBottom: 0, // main页面距离win底部的高度
+              w: 'auto' // main页面的宽度 自适应屏幕宽度
+          },
+          progress:{
+            type:'page',
+            color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
+          }
+        });
       console.log(appDevice['userId']);
       if($api.getStorage('userId')!=appDevice['userId']){
           $api.setStorage('userId',appDevice['userId']);
-          pushServe(appDevice['userId']);
       }
+      pushServe();
       api.setScreenOrientation({
           orientation: 'auto'
       });
     };
-    function createMember(userId,userPassword){
-          api.ajax({
-            url: home+'app/index.php?i=1&c=entry&do=appcreate&m=cyl_vip_video',
-            method: 'post',
-            data: {
-                values: {
-                    name: 'haha'
-                }
-            }
-        }, function(ret, err) {
-            if (ret) {
-                api.alert({ msg: JSON.stringify(ret) });
-            } else {
-                api.alert({ msg: JSON.stringify(err) });
-            }
-        });
-    }
-    function pushServe(userId){
-      var push = api.require('push');
-      if(userId!=""){
-          push.bind({
-              userName: userId,
-              userId: userId
+    function pushServe(){
+        var push = api.require('push');
+        push.joinGroup({
+              groupName: 'vip1339'
           }, function(ret, err){
                 if(ret.status){
-                  api.alert({msg:'欢迎'+userId+'观看1339.vkan.vip影院'});
+                  api.alert({msg:'欢迎使用1339.vkan.vip影院'});
                 }else{
-                  //api.alert({msg:ret.msg});
+                  //api.alert({msg:err.msg});
                 }
           });
-      }
-      push.joinGroup({
-            groupName: 'vip1339'
-        }, function(ret, err){
-              if(ret.status){
-                api.alert({msg:'欢迎进入1339.vkan.vip影院'});
-              }else{
-                //api.alert({msg:err.msg});
-              }
+        push.setListener(function( ret, err ){
+             if( ret ){
+                alert( JSON.stringify( ret) );
+             }else{
+                alert( JSON.stringify( err) );
+             }
         });
-      push.setListener(function( ret, err ){
-           if( ret ){
-              alert( JSON.stringify( ret) );
-           }else{
-              alert( JSON.stringify( err) );
-           }
-      });
     }
     function mobileAngle(){
       api.startSensor({
