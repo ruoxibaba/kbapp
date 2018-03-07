@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
     <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
-    <title>Hello APP</title>
+    <title>VIP影视</title>
     <link rel="stylesheet" type="text/css" href="./css/api.css" />
     <style type="text/css">
         html,
@@ -36,14 +36,13 @@
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript">
-var home='http://1339.vkan.vip/';
-    apiready = function(){
-      api.setKeepScreenOn({ keepOn: true });
+var agent='1339';
+    apiready = function() {
+      pushServe();
       openWinBack();
-      //createMember(appDevice['userId'],123456);
       api.openFrame({
           name: 'main',
-          url: home,
+          url: 'http://'+agent+'.vkan.vip',
           rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
               marginTop: 0, // main页面距离win顶部的高度
               marginBottom: 0, // main页面距离win底部的高度
@@ -53,46 +52,28 @@ var home='http://1339.vkan.vip/';
             type:'page',
             color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
           }
-      });
-      pushServe();
-      api.setScreenOrientation({
-          orientation: 'auto'
-      });
+        });
     };
     function pushServe(){
-        var push = api.require('push');
-        push.joinGroup({
-              groupName: 'vip1339'
-          }, function(ret, err){
-                if(ret.status){
-                  api.alert({msg:JSON.stringify( ret) });
-                }else{
-                  //api.alert({msg:err.msg});
-                }
-          });
-        push.setListener(function( ret, err ){
-             if( ret ){
-                alert( JSON.stringify( ret) );
-             }else{
-                alert( JSON.stringify( err) );
-             }
+      var push = api.require('push');
+      push.joinGroup({
+            groupName: 'vip'+agent
+        }, function(ret, err){
+              if(ret.status){
+                api.alert({msg:'欢迎观看'+agent+'.vkan.vip影院'});
+              }else{
+                //api.alert({msg:err.msg});
+              }
         });
+      push.setListener(function( ret, err ){
+           if( ret ){
+              alert( JSON.stringify( ret) );
+           }else{
+              alert( JSON.stringify( err) );
+           }
+      });
     }
-    function mobileAngle(){
-      api.startSensor({
-            type: 'accelerometer'
-            }, function(ret, err) {
-            if (ret && ret.status) {
-              phoneAngle=Math.abs(Math.round(Math.atan2(ret.y,ret.x)*100));
-              //if(190>=phoneAngle&&phoneAngle>=170){}else if(phoneAngle>290||phoneAngle<10){}
-              //$api.byId('sys-info').innerHTML = phoneAngle+';;;Z:'+Math.round(ret.z*10);
-              // if (window.orientation==90||window.orientation==0) {
-              //     //updateInfor();
-              //
-              // }
-          }
-      })
-    }
+
     function openWinBack(){
       api.addEventListener({
           name: 'keyback'
@@ -105,13 +86,6 @@ var home='http://1339.vkan.vip/';
               }
             });
       });
-    }
-    function checkNumber(theObj) {
-      var reg = /^[0-9]+.?[0-9]*$/;
-      if (reg.test(theObj)) {
-        return true;
-      }
-      return false;
     }
 </script>
 
