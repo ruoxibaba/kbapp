@@ -36,19 +36,14 @@
 </body>
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript">
-var appDevice=new Array();
 var home='http://1339.vkan.vip/';
-    apiready = function() {
+    apiready = function(){
       api.setKeepScreenOn({ keepOn: true });
-      appDevice['phone'] = api.getPhoneNumber({ sync: true });
-      appDevice['deviceId']=api.deviceId;
-      appDevice['userId'] = appDevice['phone']!=""?appDevice['phone']:appDevice['deviceId'];
       openWinBack();
-      updateInfor();
       //createMember(appDevice['userId'],123456);
       api.openFrame({
           name: 'main',
-          url: 'http://1339.vkan.vip',
+          url: home,
           rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
               marginTop: 0, // main页面距离win顶部的高度
               marginBottom: 0, // main页面距离win底部的高度
@@ -58,11 +53,7 @@ var home='http://1339.vkan.vip/';
             type:'page',
             color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
           }
-        });
-      console.log(appDevice['userId']);
-      if($api.getStorage('userId')!=appDevice['userId']){
-          $api.setStorage('userId',appDevice['userId']);
-      }
+      });
       pushServe();
       api.setScreenOrientation({
           orientation: 'auto'
@@ -74,7 +65,7 @@ var home='http://1339.vkan.vip/';
               groupName: 'vip1339'
           }, function(ret, err){
                 if(ret.status){
-                  api.alert({msg:'欢迎使用1339.vkan.vip影院'});
+                  api.alert({msg:JSON.stringify( ret) });
                 }else{
                   //api.alert({msg:err.msg});
                 }
@@ -121,48 +112,6 @@ var home='http://1339.vkan.vip/';
         return true;
       }
       return false;
-    }
-
-    function updateInfor(){
-      var ver = api.version;
-      var sType = api.systemType;
-      var sVer = api.systemVersion;
-      var id = api.deviceId;
-      var model = api.deviceModel;
-      var name = api.deviceName;
-      var cType = api.connectionType;
-      var winName = api.winName;
-      var winWidth = api.winWidth;
-      var winHeight = api.winHeight;
-      var frameName = api.frameName || '';
-      var frameWidth = api.frameWidth || '';
-      var frameHeight = api.frameHeight || '';
-      var jiaodu=window.orientation;
-      var userId = api.getPhoneNumber({ sync: true });
-      var str = '<ul>';
-      str += '<li>角度: ' + jiaodu + '</li>';
-      str += '<li>手机号: ' + userId + '</li>';
-      str += '<li>引擎版本信息: ' + ver + '</li>';
-      str += '<li>系统类型: ' + sType + '</li>';
-      str += '<li>系统版本: ' + sVer + '</li>';
-      str += '<li>设备标识: ' + id + '</li>';
-      str += '<li>设备型号: ' + model + '</li>';
-      str += '<li>设备名称: ' + name + '</li>';
-      str += '<li>网络状态: ' + cType + '</li>';
-      str += '<li>主窗口名字: ' + winName + '</li>';
-      str += '<li>主窗口宽度: ' + winWidth + '</li>';
-      str += '<li>主窗口高度: ' + winHeight + '</li>';
-      str += '<li>子窗口名字: ' + frameName + '</li>';
-      str += '<li>子窗口宽度: ' + frameWidth + '</li>';
-      str += '<li>子窗口高度: ' + frameHeight + '</li>';
-      str += '<li>appId: ' + api.appId + '</li>';
-      str += '<li>app名字: ' + api.appName + '</li>';
-      str += '<li>app版本: ' + api.appVersion + '</li>';
-      str += '<li>界面模式: ' + api.uiMode + '</li>';
-      str += '<li>运营商: ' + api.operator + '</li>';
-      str += '</ul>';
-
-      $api.byId('sys-info').innerHTML = str;
     }
 </script>
 
