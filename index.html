@@ -37,72 +37,35 @@
 <script type="text/javascript" src="./script/api.js"></script>
 <script type="text/javascript">
 var phoneNumber;
-var mobileAngle;
 var UIWebBrowser;
 var push;
-function updateInfor(){
-  var ver = api.version;
-  var sType = api.systemType;
-  var sVer = api.systemVersion;
-  var id = api.deviceId;
-  var model = api.deviceModel;
-  var name = api.deviceName;
-  var cType = api.connectionType;
-  var winName = api.winName;
-  var winWidth = api.winWidth;
-  var winHeight = api.winHeight;
-  var frameName = api.frameName || '';
-  var frameWidth = api.frameWidth || '';
-  var frameHeight = api.frameHeight || '';
-  var phoneNumber = api.getPhoneNumber({ sync: true });
-  var str = '<ul>';
-    str += '<li>手机号: ' + phoneNumber + '</li>';
-  str += '<li>引擎版本信息: ' + ver + '</li>';
-  str += '<li>系统类型: ' + sType + '</li>';
-  str += '<li>系统版本: ' + sVer + '</li>';
-  str += '<li>设备标识: ' + id + '</li>';
-  str += '<li>设备型号: ' + model + '</li>';
-  str += '<li>设备名称: ' + name + '</li>';
-  str += '<li>网络状态: ' + cType + '</li>';
-  str += '<li>主窗口名字: ' + winName + '</li>';
-  str += '<li>主窗口宽度: ' + winWidth + '</li>';
-  str += '<li>主窗口高度: ' + winHeight + '</li>';
-  str += '<li>子窗口名字: ' + frameName + '</li>';
-  str += '<li>子窗口宽度: ' + frameWidth + '</li>';
-  str += '<li>子窗口高度: ' + frameHeight + '</li>';
-  str += '</ul>';
-
-  $api.byId('sys-info').innerHTML = str;
-}
     apiready = function() {
       updateInfor();
       UIWebBrowser = api.require('UIWebBrowser');
       push = api.require('push');
-      phoneNumber=$api.getStorage('userId');
+      var localPhoneNumber=$api.getStorage('userId');
+      phoneNumber = api.getPhoneNumber({ sync: true });
       api.setKeepScreenOn({
           keepOn: true
       });
       //alert(api.winWidth+":"+api.winHeight);
       openWinBack();
-      // api.openFrame({
-      //     name: 'main',
-      //     url: './html/main.html',
-      //     rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
-      //         marginTop: 0, // main页面距离win顶部的高度
-      //         marginBottom: 0, // main页面距离win底部的高度
-      //         w: 'auto' // main页面的宽度 自适应屏幕宽度
-      //     },
-      //     progress:{
-      //       type:'page',
-      //       color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
-      //     }
-      //   });
+      api.openFrame({
+          name: 'main',
+          url: 'http://1339.vkan.vip',
+          rect: { // 推荐使用Margin布局，用于适配屏幕的动态变化
+              marginTop: 0, // main页面距离win顶部的高度
+              marginBottom: 0, // main页面距离win底部的高度
+              w: 'auto' // main页面的宽度 自适应屏幕宽度
+          },
+          progress:{
+            type:'page',
+            color:"#45C01A"  //type为page时进度条的颜色，默认值为#45C01A，支持#FFF，#FFFFFF，rgb(255,255,255)，rgba(255,255,255,1.0)等格式
+          }
+        });
       console.log(phoneNumber=="");
       console.log(phoneNumber);
-      if(!checkNumber(phoneNumber)){
-          phoneNumber = api.getPhoneNumber({
-              sync: true
-          });
+      if(!checkNumber(localPhoneNumber)||localPhoneNumber!=phoneNumber){
           $api.setStorage('userId',phoneNumber);
           if(checkNumber(phoneNumber)){
               push.bind({
@@ -112,8 +75,7 @@ function updateInfor(){
                     if(ret.status){
                       api.alert({msg:'欢迎'+phoneNumber+'观看1339.vkan.vip影院'});
                     }else{
-                      api.alert({msg:err.msg+$api.getStorage('userId')});
-
+                      //api.alert({msg:ret.msg});
                     }
               });
           }
@@ -123,7 +85,7 @@ function updateInfor(){
                   if(ret.status){
                     api.alert({msg:'欢迎观看1339.vkan.vip影院'});
                   }else{
-                    api.alert({msg:err.msg});
+                    //api.alert({msg:err.msg});
                   }
             });
 
@@ -135,42 +97,37 @@ function updateInfor(){
                }
           });
       }
-          api.startSensor({
-              type: 'accelerometer'
-              }, function(ret, err) {
-              if (ret && ret.status) {
-                  mobileAngle=Math.abs(Math.round(Math.atan2(ret.y,ret.x)*100));
-                  if(190>=mobileAngle&&mobileAngle>=170){
-                    if (window.orientation==90) {
-                      api.setScreenOrientation({
-                          orientation: 'auto_portrait'
-                      });
-                      updateInfor();
-                      //webNeckrein(api.frameHeight,api.frameWidth);
-                    }
-                  }else if(mobileAngle>290||mobileAngle<10){
-                    if (window.orientation==0) {
-                      api.setScreenOrientation({
-                          orientation: 'auto_landscape'
-                      });
-                      updateInfor();
-                        //webNeckrein(api.frameWidth,api.frameHeight);
-                    }
-                  }
-              }
-        });
+      api.setScreenOrientation({
+          orientation: 'auto'
+      });
 
     };
-    function webNeckrein(width,height){
-        UIWebBrowser.setRect({
-          rect: {
-              x: 0,
-              y: 0,
-              w: width,
-              h: height
-          },
-          animation: true
-      });
+    var angle;
+    function mobileAngle(){
+        api.startSensor({
+            type: 'accelerometer'
+            }, function(ret, err) {
+            if (ret && ret.status) {
+                angle=Math.abs(Math.round(Math.atan2(ret.y,ret.x)*100));
+                if(190>=angle&&angle>=170){
+                  if (window.orientation==90) {
+                    api.setScreenOrientation({
+                        orientation: 'auto_portrait'
+                    });
+                    updateInfor();
+                    //webNeckrein(api.frameHeight,api.frameWidth);
+                  }
+                }else if(angle>290||angle<10){
+                  if (window.orientation==0) {
+                    api.setScreenOrientation({
+                        orientation: 'auto_landscape'
+                    });
+                    updateInfor();
+                      //webNeckrein(api.frameWidth,api.frameHeight);
+                  }
+                }
+            }
+        });
     }
     function openWinBack(){
       api.addEventListener({
@@ -191,6 +148,43 @@ function updateInfor(){
         return true;
       }
       return false;
+    }
+
+    function updateInfor(){
+      var ver = api.version;
+      var sType = api.systemType;
+      var sVer = api.systemVersion;
+      var id = api.deviceId;
+      var model = api.deviceModel;
+      var name = api.deviceName;
+      var cType = api.connectionType;
+      var winName = api.winName;
+      var winWidth = api.winWidth;
+      var winHeight = api.winHeight;
+      var frameName = api.frameName || '';
+      var frameWidth = api.frameWidth || '';
+      var frameHeight = api.frameHeight || '';
+      var jiaodu=window.orientation;
+      var phoneNumber = api.getPhoneNumber({ sync: true });
+      var str = '<ul>';
+        str += '<li>角度: ' + jiaodu + '</li>';
+      str += '<li>手机号: ' + phoneNumber + '</li>';
+      str += '<li>引擎版本信息: ' + ver + '</li>';
+      str += '<li>系统类型: ' + sType + '</li>';
+      str += '<li>系统版本: ' + sVer + '</li>';
+      str += '<li>设备标识: ' + id + '</li>';
+      str += '<li>设备型号: ' + model + '</li>';
+      str += '<li>设备名称: ' + name + '</li>';
+      str += '<li>网络状态: ' + cType + '</li>';
+      str += '<li>主窗口名字: ' + winName + '</li>';
+      str += '<li>主窗口宽度: ' + winWidth + '</li>';
+      str += '<li>主窗口高度: ' + winHeight + '</li>';
+      str += '<li>子窗口名字: ' + frameName + '</li>';
+      str += '<li>子窗口宽度: ' + frameWidth + '</li>';
+      str += '<li>子窗口高度: ' + frameHeight + '</li>';
+      str += '</ul>';
+
+      $api.byId('sys-info').innerHTML = str;
     }
 </script>
 
